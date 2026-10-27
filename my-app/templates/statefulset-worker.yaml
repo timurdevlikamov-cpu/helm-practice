@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: {{ .Release.Name }}-worker
+spec:
+    serviceName: "worker"
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: worker
+    template:
+        metadata:
+            labels:
+                app: worker
+        spec:
+            containers:
+                - name: worker
+                  image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+                  imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+                  volumeMounts:
+                    - name: data
+                      mountPath: /data
+    volumeClaimTemplates:
+        - metadata:
+            name: data
+          spec:
+            accessModes: [ "ReadWriteOnce" ]
+            resources:
+                requests:
+                    storage: {{ .Values.worker.storage.size }}

@@ -1,0 +1,17 @@
+replicaCount: 1
+
+web:
+  image:
+    repository: nginx
+    tag: "stable"
+    pullPolicy: IfNotPresent
+  service:
+    port: 80
+
+worker:
+  image:
+    repository: busybox
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  storage:
+    size: 1Gi

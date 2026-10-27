@@ -1,0 +1,9 @@
+replicaCount: 1
+web:
+  image:
+    repository: nginx
+    tag: "mainline"
+worker:
+  image:
+    repository: busybox
+    tag: "latest"
